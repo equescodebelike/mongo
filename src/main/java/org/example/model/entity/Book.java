@@ -15,17 +15,16 @@ public class Book {
     private String description;
     @TextIndexed
     private String searchText; // full-text searching
-    @DBRef
-    private List<Category> categories;
+    private List<String> categoryIds; // manual references
 
     // Constructors
     public Book() {}
 
-    public Book(String title, String author, String description, List<Category> categories) {
+    public Book(String title, String author, String description, List<String> categoryIds) {
         this.title = title;
         this.author = author;
         this.description = description;
-        this.categories = categories;
+        this.categoryIds = categoryIds;
         // full-text search
         this.searchText = title + " " + author + " " + description;
     }
@@ -71,12 +70,12 @@ public class Book {
         this.searchText = searchText;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public List<String> getCategoryIds() {
+        return categoryIds;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategoryIds(List<String> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
     @Override
@@ -86,7 +85,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
-                ", categories=" + categories +
+                ", categoryIds=" + categoryIds +
                 '}';
     }
 }

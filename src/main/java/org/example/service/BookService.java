@@ -59,7 +59,7 @@ public class BookService {
         book.setTitle(updatedBook.getTitle());
         book.setAuthor(updatedBook.getAuthor());
         book.setDescription(updatedBook.getDescription());
-        book.setCategories(updatedBook.getCategories());
+        book.setCategoryIds(updatedBook.getCategoryIds());
         return bookRepository.save(book);
     }
 
@@ -78,7 +78,6 @@ public class BookService {
             book.setTitle("Book " + i);
             book.setAuthor("Author " + i);
             book.setDescription("Description for Book " + i);
-            // Set categories or any other attributes as needed
             books.add(book);
         }
 

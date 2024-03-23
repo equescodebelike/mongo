@@ -1,50 +1,42 @@
 package org.example.model.entity;
 
+import com.mongodb.client.model.geojson.Point;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "stacks")
 public class Stack {
     @Id
     private String id;
-    private String location;
     private int rows;
     private int columns;
 
     // пространственный индекс Geo JSON
-    private String[][] shelves; // 2D array representing shelves
+    private Point location;
 
     // мануальные ссылки
-    @DBRef
-    private List<Book> books; // List of books in the stack
+    private List<String> bookIds;
 
-    // Constructors
     public Stack() {}
 
-    public Stack(String location, int rows, int columns) {
-        this.location = location;
+    public Stack(int rows, int columns, Point location) {
         this.rows = rows;
         this.columns = columns;
-        this.shelves = new String[rows][columns];
+        this.location = location;
+        this.bookIds = new ArrayList<>();
     }
 
-    // Setters and Getters
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public int getRows() {
@@ -63,19 +55,39 @@ public class Stack {
         this.columns = columns;
     }
 
-    public String[][] getShelves() {
-        return shelves;
+    public Point getLocation() {
+        return location;
     }
 
-    public void setShelves(String[][] shelves) {
-        this.shelves = shelves;
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<String> getBookIds() {
+        return bookIds;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void addBookId(String bookId) {
+        this.bookIds.add(bookId);
+    }
+
+    public void removeBookId(String bookId) {
+        this.bookIds.remove(bookId);
+    }
+
+    public boolean containsBookId(String bookId) {
+        return this.bookIds.contains(bookId);
+    }
+
+    @Override
+    public String toString() {
+        return "Stack{" +
+                "id='" + id + '\'' +
+                ", rows=" + rows +
+                ", columns=" + columns +
+                ", location=" + location +
+                ", bookIds=" + bookIds +
+                '}';
     }
 }
+
